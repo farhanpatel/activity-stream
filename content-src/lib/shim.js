@@ -9,10 +9,16 @@ function dispatch(action) {
 }
 
 module.exports = function() {
+
+  window.firefoxAdd = function(bookmark) {
+    console.log("wtffff sweet")
+  }
+
   window.addEventListener(CONTENT_TO_ADDON, function(event) {
     const action = JSON.parse(event.detail);
     switch (action.type) {
       case "TOP_FRECENT_SITES_REQUEST":
+        console.log("topsites")
         dispatch({type: "TOP_FRECENT_SITES_RESPONSE", data: fakeData.TopSites.rows.map(site => {
           return Object.assign({}, site, {
             // images: [],
