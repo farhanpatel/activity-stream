@@ -5,11 +5,11 @@ const {Provider} = require("react-redux");
 const Routes = require("components/Routes/Routes");
 const store = require("./store");
 
-if (__CONFIG__.USE_SHIM) {
+// if (__CONFIG__.USE_SHIM) {
   require("lib/shim")();
-}
+// }
 
-require("lib/ios-bridge")()
+//require("lib/ios-bridge")()
 
 const Root = React.createClass({
   render() {

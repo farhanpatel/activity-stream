@@ -11,7 +11,7 @@ const {actions} = require("common/action-manager");
 const {Link} = require("react-router");
 const setFavicon = require("lib/set-favicon");
 const classNames = require("classnames");
-const MAX_TOP_ACTIVITY_ITEMS = 10;
+const MAX_TOP_ACTIVITY_ITEMS = 100;
 const PAGE_NAME = "NEW_TAB";
 
 const NewTabPage = React.createClass({
@@ -46,10 +46,6 @@ const NewTabPage = React.createClass({
     const showRecommendationOption = props.showRecommendationOption;
     return (<main className="new-tab">
       <div className="new-tab-wrapper">
-        <section>
-          <Search/>
-        </section>
-
         <Loader
           className="loading-notice"
           show={!this.props.isReady}
@@ -72,7 +68,7 @@ const NewTabPage = React.createClass({
           </section>
 
           <section className="bottom-links-container">
-            <Link className="bottom-link" to="/timeline"><span className="icon icon-spacer icon-activity-stream" /> See all activity</Link>
+            
             <span className="link-wrapper-right">
               <a
                 ref="settingsLink"

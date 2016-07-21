@@ -93,18 +93,8 @@
     left: $feed-gutter-h - 2;
   }
 
-  &.active,
-  &:hover {
-    background: $feed-hover-color;
-    border: 1px solid $faintest-black;
 
-    .action-items-container {
-      opacity: 1;
-      transition-delay: 250ms;
-      transition-property: opacity;
-      transition-duration: 250ms;
-    }
-  }
+
 }
 
 .site-icon.feed-icon,

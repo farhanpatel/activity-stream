@@ -53,14 +53,14 @@
       display: none;
     }
 
-    &:hover,
-    &.active {
-      border-color: $faintest-black;
+    // &:hover,
+    // &.active {
+    //   border-color: $faintest-black;
 
-      .text {
-        display: inline;
-      }
-    }
+    //   .text {
+    //     display: inline;
+    //   }
+    // }
   }
 
   .icon {
