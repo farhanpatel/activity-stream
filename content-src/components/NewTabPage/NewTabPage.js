@@ -11,7 +11,7 @@ const {actions} = require("common/action-manager");
 const {Link} = require("react-router");
 const setFavicon = require("lib/set-favicon");
 const classNames = require("classnames");
-const MAX_TOP_ACTIVITY_ITEMS = 100;
+const MAX_TOP_ACTIVITY_ITEMS = 200;
 const PAGE_NAME = "NEW_TAB";
 
 const NewTabPage = React.createClass({
@@ -55,6 +55,11 @@ const NewTabPage = React.createClass({
 
         <div className={classNames("show-on-init", {on: this.props.isReady})}>
           <section>
+            <Link className="bottom-link" to="/bookmarks"><span className="icon icon-spacer icon-activity-stream" />Bookmarks</Link>
+            <Link className="bottom-link" to="/history"><span className="icon icon-spacer icon-activity-stream" />History</Link>
+
+          </section>
+          <section>
             <TopSites page={PAGE_NAME} sites={props.TopSites.rows} />
           </section>
 
@@ -64,11 +69,10 @@ const NewTabPage = React.createClass({
 
           <section>
             <h3 ref="title" className="section-title">Recent Activity</h3>
-            <GroupedActivityFeed sites={props.TopActivity.rows} length={MAX_TOP_ACTIVITY_ITEMS} page={PAGE_NAME} maxPreviews={1} />
+            <GroupedActivityFeed sites={props.TopActivity.rows} length={MAX_TOP_ACTIVITY_ITEMS} page={PAGE_NAME} maxPreviews={10} />
           </section>
 
           <section className="bottom-links-container">
-            
             <span className="link-wrapper-right">
               <a
                 ref="settingsLink"
