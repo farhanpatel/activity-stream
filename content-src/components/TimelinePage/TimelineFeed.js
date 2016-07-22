@@ -8,6 +8,7 @@ const Loader = require("components/Loader/Loader");
 const classNames = require("classnames");
 const {INFINITE_SCROLL_THRESHOLD, SCROLL_TOP_OFFSET} = require("common/constants");
 const debounce = require("lodash.debounce");
+let loadtimes = 5
 
 const TimelineFeed = React.createClass({
   loadMore() {
@@ -27,17 +28,23 @@ const TimelineFeed = React.createClass({
   maybeLoadMoreData(values) {
     const {Feed} = this.props;
     const {scrollTop, scrollHeight} = values;
+            console.log(scrollHeight,(scrollTop + this.windowHeight - SCROLL_TOP_OFFSET))
 
     if (!Feed.canLoadMore || Feed.isLoading) {
       return;
     }
+    //only load 5 times
+    if (loadtimes > 0) {
+      this.loadMore();
+      loadtimes--
+    }
+    
 
     if (!this.windowHeight) {
       this.windowHeight = window.innerHeight;
     }
-
     if (scrollHeight - (scrollTop + this.windowHeight - SCROLL_TOP_OFFSET) < INFINITE_SCROLL_THRESHOLD) {
-      this.loadMore();
+       this.loadMore();
     }
   },
   onResize: debounce(function() {
@@ -77,7 +84,7 @@ const TimelineFeed = React.createClass({
     const props = this.props;
     return (<section className="content" ref="scrollElement" onScroll={!props.Feed.isLoading && props.Feed.canLoadMore && this.loadMoreDataIfNeeded}>
       <div ref="wrapper" className={classNames("wrapper", "show-on-init", {on: props.Feed.init})}>
-        {props.Spotlight ? <Spotlight page={this.props.pageName} sites={props.Spotlight.rows} /> : null }
+         {props.Spotlight ? <Spotlight page={this.props.pageName} sites={props.Spotlight.rows} /> : null }
         <GroupedActivityFeed
           sites={props.Feed.rows}
           page={props.pageName}
