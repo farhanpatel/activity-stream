@@ -2,19 +2,19 @@ const faker = require("test/faker");
 
 module.exports = {
   "TopSites": {
-    "rows": faker.createRows({images: 8}),
+    "rows": faker.createRows({images: 1000}),
     "error": false
   },
   "History": {
-    "rows": faker.createRows({images: 12}),
+    "rows": faker.createRows({images: 1000}),
     "error": false
   },
   "Highlights": {
-    "rows": faker.createRows({images: 10}),
+    "rows": faker.createRows({images: 1000}),
     "error": false
   },
   "Bookmarks": {
-    "rows": faker.createRows({images: 3, type: "bookmark"}),
+    "rows": faker.createRows({images: 1000, type: "bookmark"}),
     "error": false
   },
   "Search": {
