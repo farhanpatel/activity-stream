@@ -4,8 +4,6 @@ const {justDispatch} = require("selectors/selectors");
 const {actions} = require("common/action-manager");
 const moment = require("moment");
 const SiteIcon = require("components/SiteIcon/SiteIcon");
-const LinkMenu = require("components/LinkMenu/LinkMenu");
-const LinkMenuButton = require("components/LinkMenuButton/LinkMenuButton");
 const classNames = require("classnames");
 
 const DEFAULT_LENGTH = 3;
@@ -80,9 +78,7 @@ const SpotlightItem = React.createClass({
               <h4 ref="title" className="spotlight-title">{site.title}</h4>
               <p className="spotlight-description" ref="description">{description}</p>
             </div>
-            <div className="spotlight-context" ref="spotlightContext"
-              onMouseOver={() => this.onMouseIn(site)}
-              onMouseOut={() => this.onMouseOut(site)}>
+            <div className="spotlight-context" ref="spotlightContext">
               {site.recommended ? <div className="icon icon-pocket"></div> : null}
               <div className={site.recommended ? "recommended-context" : ""}
               data-timestamp={site.recommended ? `${relativeTimestamp}` : ""}
@@ -92,19 +88,6 @@ const SpotlightItem = React.createClass({
         </div>
         <div className="inner-border" />
       </a>
-        <div className="spotlight-tooltip" ref="spotlightTooltip" hidden={!this.state.hover}>
-        This page is trending on Pocket right now.
-        <div className="anchor"></div>
-        </div>
-      <LinkMenuButton onClick={() => this.setState({showContextMenu: true})} />
-      <LinkMenu
-        visible={this.state.showContextMenu}
-        onUpdate={val => this.setState({showContextMenu: val})}
-        site={site}
-        page={this.props.page}
-        index={this.props.index}
-        source={this.props.source}
-        />
     </li>);
   }
 });
@@ -130,7 +113,6 @@ const Spotlight = React.createClass({
   },
   onClickFactory(index, site) {
     return () => {
-      console.log(site.url)
       this.props.dispatch(actions.NotifyEvent({
         event: "CLICK",
         page: this.props.page,

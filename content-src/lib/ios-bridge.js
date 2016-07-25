@@ -11,15 +11,12 @@ function dispatch(action) {
 
 module.exports = function() {
 
+  //Look for CLICK events to alert iOS when to load a url
   window.addEventListener(CONTENT_TO_ADDON, function(event) {
     const action = JSON.parse(event.detail);
     if (action && action.data && action.data.event === "CLICK") {
-        //fire the ios event here
-        console.dir("firigngg")
         window.webkit.messageHandlers.topsitesHandler.postMessage(action.data.url);
     }
-
-
   }, false);
 
 

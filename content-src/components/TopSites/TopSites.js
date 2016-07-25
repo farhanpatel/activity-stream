@@ -22,12 +22,12 @@ const TopSites = React.createClass({
       page: "NEW_TAB"
     };
   },
-  onClick(index,url) {
+  onClick(index,site) {
     this.props.dispatch(actions.NotifyEvent({
       event: "CLICK",
       page: this.props.page,
       source: "TOP_SITES",
-      url: url,
+      url: site.url,
       action_position: index
     }));
   },
@@ -43,22 +43,10 @@ const TopSites = React.createClass({
         {sites.map((site, i) => {
           const isActive = this.state.showContextMenu && this.state.activeTile === i;
           return (<div className="tile-outer" key={site.guid || site.cacheKey || i}>
-            <a onClick={() => this.onClick(i,site.url)} className={classNames("tile", {active: isActive})} href={site.url}>
+            <a onClick={() => this.onClick(i, site)} className={classNames("tile", {active: isActive})} href="#">
               <SiteIcon className="tile-img-container" site={site} faviconSize={32} showTitle />
               <div className="inner-border" />
             </a>
-            <LinkMenuButton onClick={(ev) => {
-              ev.preventDefault();
-              this.setState({showContextMenu: true, activeTile: i});
-            }} />
-            <LinkMenu
-              visible={isActive}
-              onUpdate={val => this.setState({showContextMenu: val})}
-              site={site}
-              page={this.props.page}
-              source="TOP_SITES"
-              index={i}
-              />
         </div>);
         })}
         {blankSites}

@@ -25,15 +25,15 @@ if (env !== "test") {
   plugins.push(new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"));
 }
 
-  plugins = plugins.concat([
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.optimize.DedupePlugin()
-  ]);
+plugins = plugins.concat([
+  new webpack.optimize.OccurenceOrderPlugin(),
+  new webpack.optimize.UglifyJsPlugin({
+    compress: {
+      warnings: false
+    }
+  }),
+  new webpack.optimize.DedupePlugin()
+]);
 
 
 module.exports = {

@@ -4,14 +4,12 @@ const {selectNewTabSites} = require("selectors/selectors");
 const TopSites = require("components/TopSites/TopSites");
 const GroupedActivityFeed = require("components/ActivityFeed/ActivityFeed");
 const Spotlight = require("components/Spotlight/Spotlight");
-const Search = require("components/Search/Search");
 const Loader = require("components/Loader/Loader");
-const ContextMenu = require("components/ContextMenu/ContextMenu");
 const {actions} = require("common/action-manager");
 const {Link} = require("react-router");
-const setFavicon = require("lib/set-favicon");
 const classNames = require("classnames");
-const MAX_TOP_ACTIVITY_ITEMS = 200;
+
+const MAX_TOP_ACTIVITY_ITEMS = 10;
 const PAGE_NAME = "NEW_TAB";
 
 const NewTabPage = React.createClass({
@@ -29,10 +27,6 @@ const NewTabPage = React.createClass({
     this.props.dispatch(actions.NotifyToggleRecommendations());
     this.props.dispatch(actions.RequestHighlightsLinks());
   },
-  componentDidMount() {
-    document.title = "New Tab";
-    setFavicon("newtab-icon.svg");
-  },
   componentDidUpdate() {
     if (this.props.isReady && !this.state.renderedOnce) {
       this.props.dispatch(actions.NotifyPerf("NEWTAB_RENDER"));
@@ -41,17 +35,8 @@ const NewTabPage = React.createClass({
   },
   render() {
     const props = this.props;
-    const recommendationLabel = "Show Trending Highlights";
-    const recommendationIcon = props.Spotlight.recommendationShown ? "check" : "   ";
-    const showRecommendationOption = props.showRecommendationOption;
     return (<main className="new-tab">
       <div className="new-tab-wrapper">
-        <Loader
-          className="loading-notice"
-          show={!this.props.isReady}
-          label="Hang on tight! We are analyzing your history to personalize your experience"
-          centered
-        />
 
         <div className={classNames("show-on-init", {on: this.props.isReady})}>
           <section>
@@ -67,28 +52,8 @@ const NewTabPage = React.createClass({
             <GroupedActivityFeed sites={props.TopActivity.rows} length={MAX_TOP_ACTIVITY_ITEMS} page={PAGE_NAME} maxPreviews={10} />
           </section>
 
-          <section className="bottom-links-container">
-            <span className="link-wrapper-right">
-              <a
-                ref="settingsLink"
-                hidden={!showRecommendationOption}
-                className={classNames("bottom-link expand", {active: this.state.showSettingsMenu})}
-                onClick={() => this.setState({showSettingsMenu: !this.state.showSettingsMenu})} >
-                  <span className="icon icon-spacer icon-settings" /> <span className="text">Settings</span>
-              </a>
-              <ContextMenu
-                ref="settingsMenu"
-                visible={this.state.showSettingsMenu}
-                onUpdate={showSettingsMenu => this.setState({showSettingsMenu})}
-                options={[
-                  {icon: recommendationIcon, label: recommendationLabel, onClick: this.toggleRecommendation}
-                ]} />
-            </span>
-          </section>
         </div>
       </div>
-
-      <Link className="debug-link" to="/debug">debug</Link>
     </main>);
   }
 });

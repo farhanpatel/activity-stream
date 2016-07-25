@@ -3,8 +3,6 @@ const {connect} = require("react-redux");
 const {justDispatch, selectSitePreview} = require("selectors/selectors");
 const {actions} = require("common/action-manager");
 const SiteIcon = require("components/SiteIcon/SiteIcon");
-const LinkMenu = require("components/LinkMenu/LinkMenu");
-const LinkMenuButton = require("components/LinkMenuButton/LinkMenuButton");
 const MediaPreview = require("components/MediaPreview/MediaPreview");
 const {prettyUrl, getRandomFromTimestamp} = require("lib/utils");
 const moment = require("moment");
@@ -80,15 +78,6 @@ const ActivityFeedItem = React.createClass({
           </div>
         </div>
       </a>
-      <LinkMenu
-        visible={this.state.showContextMenu}
-        onUpdate={val => this.setState({showContextMenu: val})}
-        allowBlock={this.props.page === "NEW_TAB"}
-        site={site}
-        page={this.props.page}
-        source={this.props.source}
-        index={this.props.index}
-        />
     </li>);
   }
 });
@@ -153,15 +142,14 @@ const GroupedActivityFeed = React.createClass({
       showDateHeadings: false
     };
   },
-  onClickFactory(index,url) {
+  onClickFactory(index, site) {
     return () => {
       //for hacks. Fire a webkit event here to load the url in the main webview
-      console.log(url)
       this.props.dispatch(actions.NotifyEvent({
         event: "CLICK",
         page: this.props.page,
         source: "ACTIVITY_FEED",
-        url: url,
+        url: site.url,
         action_position: index
       }));
     };
@@ -210,7 +198,7 @@ const GroupedActivityFeed = React.createClass({
                 }
                 return (<ActivityFeedItem
                     key={site.guid || i}
-                    onClick={this.onClickFactory(globalCount,site.url)}
+                    onClick={this.onClickFactory(globalCount, site)}
                     onShare={this.onShareFactory(globalCount)}
                     showImage={getRandomFromTimestamp(0.2, site)}
                     index={globalCount}
