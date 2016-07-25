@@ -35,6 +35,9 @@ const ActivityFeedItem = React.createClass({
       showDate: false
     };
   },
+  onClick() {
+
+  },
   render() {
     const site = this.props;
     const title = site.title || site.provider_display || (site.parsedUrl && site.parsedUrl.hostname);
@@ -63,7 +66,7 @@ const ActivityFeedItem = React.createClass({
     }
 
     return (<li className={classNames("feed-item", {bookmark: site.bookmarkGuid, active: this.state.showContextMenu})}>
-      <a onClick={this.props.onClick} href={site.url} ref="link">
+      <a onClick={this.props.onClick} ref="link">
         <span className="star" hidden={!site.bookmarkGuid} />
         {icon}
         <div className="feed-details">
@@ -77,7 +80,6 @@ const ActivityFeedItem = React.createClass({
           </div>
         </div>
       </a>
-      <LinkMenuButton onClick={() => this.setState({showContextMenu: true})} />
       <LinkMenu
         visible={this.state.showContextMenu}
         onUpdate={val => this.setState({showContextMenu: val})}
@@ -151,12 +153,15 @@ const GroupedActivityFeed = React.createClass({
       showDateHeadings: false
     };
   },
-  onClickFactory(index) {
+  onClickFactory(index,url) {
     return () => {
+      //for hacks. Fire a webkit event here to load the url in the main webview
+      console.log(url)
       this.props.dispatch(actions.NotifyEvent({
         event: "CLICK",
         page: this.props.page,
         source: "ACTIVITY_FEED",
+        url: url,
         action_position: index
       }));
     };
@@ -205,7 +210,7 @@ const GroupedActivityFeed = React.createClass({
                 }
                 return (<ActivityFeedItem
                     key={site.guid || i}
-                    onClick={this.onClickFactory(globalCount)}
+                    onClick={this.onClickFactory(globalCount,site.url)}
                     onShare={this.onShareFactory(globalCount)}
                     showImage={getRandomFromTimestamp(0.2, site)}
                     index={globalCount}

@@ -25,18 +25,16 @@ if (env !== "test") {
   plugins.push(new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"));
 }
 
-if (env === "production") {
   plugins = plugins.concat([
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      test: /vendor/,
       compress: {
         warnings: false
       }
     }),
     new webpack.optimize.DedupePlugin()
   ]);
-}
+
 
 module.exports = {
   entry: {

@@ -55,11 +55,6 @@ const NewTabPage = React.createClass({
 
         <div className={classNames("show-on-init", {on: this.props.isReady})}>
           <section>
-            <Link className="bottom-link" to="/bookmarks"><span className="icon icon-spacer icon-activity-stream" />Bookmarks</Link>
-            <Link className="bottom-link" to="/history"><span className="icon icon-spacer icon-activity-stream" />History</Link>
-
-          </section>
-          <section>
             <TopSites page={PAGE_NAME} sites={props.TopSites.rows} />
           </section>
 
