@@ -3,8 +3,6 @@ const {connect} = require("react-redux");
 const {justDispatch} = require("selectors/selectors");
 const {actions} = require("common/action-manager");
 const classNames = require("classnames");
-const LinkMenu = require("components/LinkMenu/LinkMenu");
-const LinkMenuButton = require("components/LinkMenuButton/LinkMenuButton");
 const SiteIcon = require("components/SiteIcon/SiteIcon");
 const DEFAULT_LENGTH = 6;
 
